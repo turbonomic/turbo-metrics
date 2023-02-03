@@ -1,0 +1,20 @@
+# permissions for end users to view prometheusservers.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: prometheusserver-viewer-role
+rules:
+- apiGroups:
+  - metrics.turbonomic.io
+  resources:
+  - prometheusservers
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - metrics.turbonomic.io
+  resources:
+  - prometheusservers/status
+  verbs:
+  - get

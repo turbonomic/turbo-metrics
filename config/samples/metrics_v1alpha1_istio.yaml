@@ -1,0 +1,29 @@
+apiVersion: metrics.turbonomic.io/v1alpha1
+kind: PrometheusExporter
+metadata:
+  name: istio
+spec:
+  entities:
+    - type: application
+      metrics:
+        - type: responseTime
+          queries:
+            used: 'rate(istio_request_duration_milliseconds_sum{request_protocol="http",response_code="200",reporter="destination"}[1m])/rate(istio_request_duration_milliseconds_count{}[1m]) >= 0'
+        - type: transaction
+          queries:
+            used: 'rate(istio_requests_total{request_protocol="http",response_code="200",reporter="destination"}[1m]) > 0'
+        - type: responseTime
+          queries:
+            used: 'rate(istio_request_duration_milliseconds_sum{request_protocol="grpc",grpc_response_status="0",response_code="200",reporter="destination"}[1m])/rate(istio_request_duration_milliseconds_count{}[1m]) >= 0'
+        - type: transaction
+          queries:
+            used: 'rate(istio_requests_total{request_protocol="grpc",grpc_response_status="0",response_code="200",reporter="destination"}[1m]) > 0'
+      attributes:
+        ip:
+          label: instance
+          matches: \d{1,3}(?:\.\d{1,3}){3}(?::\d{1,5})??
+          isIdentifier: true
+        namespace:
+          label: destination_service_namespace
+        service:
+          label: destination_service_name

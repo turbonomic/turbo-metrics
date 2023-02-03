@@ -1,0 +1,24 @@
+# permissions for end users to edit prometheusservers.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: prometheusserver-editor-role
+rules:
+- apiGroups:
+  - metrics.turbonomic.io
+  resources:
+  - prometheusservers
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - metrics.turbonomic.io
+  resources:
+  - prometheusservers/status
+  verbs:
+  - get
