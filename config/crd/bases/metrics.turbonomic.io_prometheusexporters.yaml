@@ -53,12 +53,11 @@ spec:
                           matches:
                             type: string
                         required:
-                        - isIdentifier
                         - label
                         type: object
                       description: AttributeConfigs specifies how to map labels into
                         attributes
-                      maxProperties: 1
+                      minProperties: 1
                       type: object
                     hostedOnVM:
                       type: boolean

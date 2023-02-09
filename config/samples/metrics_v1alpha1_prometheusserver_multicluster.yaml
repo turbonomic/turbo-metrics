@@ -7,13 +7,13 @@ spec:
   clusters:
     - clusterLabels:
         cluster: clusterA
-      id: 5f2bd289
+      id: "5f2bd289"
       exporterSelector:
-        matchExpression:
+        matchExpressions:
           - key: exporter
             operator: NotIn
             values:
               - istio
     - clusterLabels:
         cluster: clusterB
-      id: 936056e5
+      id: "936056e5"

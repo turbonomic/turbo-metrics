@@ -6,7 +6,7 @@ spec:
   address: http://prometheus.istio-system:9090
   clusters:
     - exporterSelector:
-        matchExpression:
+        matchExpressions:
           - key: exporter
             operator: NotIn
             values:

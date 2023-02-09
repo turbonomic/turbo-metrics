@@ -22,15 +22,18 @@ type EntityConfiguration struct {
 	HostedOnVM    bool                  `json:"hostedOnVM,omitempty"`
 	MetricConfigs []MetricConfiguration `json:"metrics"`
 	// AttributeConfigs specifies how to map labels into attributes
-	// +kubebuilder:validation:MaxProperties:=1
+	// +kubebuilder:validation:MinProperties:=1
 	AttributeConfigs map[string]LabelMapping `json:"attributes"`
 }
 
 type LabelMapping struct {
-	Label        string `json:"label"`
-	Matches      string `json:"matches,omitempty"`
-	As           string `json:"as,omitempty"`
-	IsIdentifier bool   `json:"isIdentifier"`
+	Label string `json:"label"`
+	// +optional
+	Matches string `json:"matches,omitempty"`
+	// +optional
+	As string `json:"as,omitempty"`
+	// +optional
+	IsIdentifier bool `json:"isIdentifier,omitempty"`
 }
 
 type EntityStatus struct {
