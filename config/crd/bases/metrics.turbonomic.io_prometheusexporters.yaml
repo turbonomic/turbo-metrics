@@ -42,33 +42,74 @@ spec:
                 items:
                   properties:
                     attributes:
-                      additionalProperties:
+                      description: AttributeConfigs specifies how to map labels into
+                        attributes of an entity
+                      items:
                         properties:
                           as:
+                            description: As specifies how to reconstruct the extracted
+                              patterns from the result of the Matches and use that
+                              as the attribute value instead This field is only evaluated
+                              when Matches field is specified
                             type: string
                           isIdentifier:
+                            description: IsIdentifier specifies if this attribute
+                              should be used as the identifier of an entity There
+                              should be one and only one identifier for an entity
                             type: boolean
                           label:
+                            description: The name of the label If the Matches field
+                              is not specified, the value of this label will be used
+                              as the attribute value
                             type: string
                           matches:
+                            description: Matches specifies the regular expression
+                              to extract the pattern from the label value and then
+                              use it as the attribute value
+                            type: string
+                          name:
+                            description: The name of the attribute
                             type: string
                         required:
                         - label
+                        - name
                         type: object
-                      description: AttributeConfigs specifies how to map labels into
-                        attributes
-                      minProperties: 1
-                      type: object
+                      minItems: 1
+                      type: array
+                      x-kubernetes-list-map-keys:
+                      - name
+                      x-kubernetes-list-type: map
                     hostedOnVM:
+                      description: HostedOnVM specifies if an entity is hosted on
+                        VM If not set, the entity is assumed to be hosted on a container
                       type: boolean
                     metrics:
                       items:
                         properties:
                           queries:
-                            additionalProperties:
-                              type: string
-                            type: object
+                            items:
+                              properties:
+                                promql:
+                                  description: PromQL specifies the Prometheus query
+                                  type: string
+                                type:
+                                  description: Type specifies the subtype of metric
+                                  enum:
+                                  - used
+                                  - capacity
+                                  - peak
+                                  type: string
+                              required:
+                              - promql
+                              - type
+                              type: object
+                            minItems: 1
+                            type: array
+                            x-kubernetes-list-map-keys:
+                            - type
+                            x-kubernetes-list-type: map
                           type:
+                            description: Type specifies the type of metric
                             enum:
                             - responseTime
                             - transaction
@@ -85,6 +126,7 @@ spec:
                         type: object
                       type: array
                     type:
+                      description: Type specifies the type of entity
                       enum:
                       - application
                       - databaseServer

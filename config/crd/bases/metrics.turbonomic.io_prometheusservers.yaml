@@ -40,9 +40,9 @@ spec:
                 type: string
               clusters:
                 description: Information about the clusters which this Prometheus
-                  server should obtain metrics for. If not specified, or empty, it
-                  is assumed that all metrics obtained are for the cluster where the
-                  Prometurbo probe is running.
+                  server should obtain metrics for. If not specified, defaults to
+                  all metrics obtained are for the cluster where the Prometurbo probe
+                  is running.
                 items:
                   properties:
                     clusterLabels:
@@ -52,9 +52,9 @@ spec:
                         PromQL query against the Prometheus server
                       type: object
                     exporterSelector:
-                      description: The Label selector for PrometheusExporters. If
-                        not defined, defaults to all PrometheusExporter resources
-                        in the current namespace.
+                      description: The Label selector for PrometheusExporters If not
+                        defined, defaults to all PrometheusExporter resources in the
+                        current namespace
                       properties:
                         matchExpressions:
                           description: matchExpressions is a list of label selector
@@ -98,18 +98,14 @@ spec:
                           type: object
                       type: object
                     id:
-                      description: 'The unique ID of the cluster. Get the ID by running
+                      description: 'The unique ID of the cluster Get the ID by running
                         the following command in the cluster: kubectl -n default get
-                        svc kubernetes -ojsonpath=''{.metadata.uid}'''
+                        svc kubernetes -ojsonpath=''{.metadata.uid}'' If not specified,
+                        defaults to the ID of the cluster where the Prometurbo probe
+                        is running'
                       type: string
                   type: object
                 type: array
-              password:
-                description: Password of the Prometheus server.
-                type: string
-              username:
-                description: Username of the Prometheus server.
-                type: string
             required:
             - address
             type: object

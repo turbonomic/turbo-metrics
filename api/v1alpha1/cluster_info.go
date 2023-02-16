@@ -23,14 +23,15 @@ type ClusterConfiguration struct {
 	// +optional
 	ClusterLabels map[string]string `json:"clusterLabels,omitempty"`
 
-	// The unique ID of the cluster.
+	// The unique ID of the cluster
 	// Get the ID by running the following command in the cluster:
 	//     kubectl -n default get svc kubernetes -ojsonpath='{.metadata.uid}'
+	// If not specified, defaults to the ID of the cluster where the Prometurbo probe is running
 	// +optional
 	ID string `json:"id,omitempty"`
 
-	// The Label selector for PrometheusExporters.
-	// If not defined, defaults to all PrometheusExporter resources in the current namespace.
+	// The Label selector for PrometheusExporters
+	// If not defined, defaults to all PrometheusExporter resources in the current namespace
 	// +optional
 	ExporterSelector *metav1.LabelSelector `json:"exporterSelector,omitempty"`
 }

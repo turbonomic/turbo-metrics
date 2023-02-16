@@ -17,7 +17,21 @@ limitations under the License.
 package v1alpha1
 
 type MetricConfiguration struct {
+	// Type specifies the type of metric
 	// +kubebuilder:validation:Enum=responseTime;transaction;heap;collectionTime;cacheHitRate;dbMem;cpu;memory
-	Type    string            `json:"type"`
-	Queries map[string]string `json:"queries"`
+	Type string `json:"type"`
+
+	// +listType=map
+	// +listMapKey=type
+	// +kubebuilder:validation:MinItems=1
+	QueryConfigs []QueryConfiguration `json:"queries"`
+}
+
+type QueryConfiguration struct {
+	// Type specifies the subtype of metric
+	// +kubebuilder:validation:Enum=used;capacity;peak
+	Type string `json:"type"`
+
+	// PromQL specifies the Prometheus query
+	PromQL string `json:"promql"`
 }
