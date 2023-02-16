@@ -20,7 +20,6 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-// EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
 // NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
 
 // PrometheusServerSpec defines the desired state of PrometheusServer
@@ -28,16 +27,8 @@ type PrometheusServerSpec struct {
 	// Address of the Prometheus server.
 	Address string `json:"address"`
 
-	// Username of the Prometheus server.
-	// +optional
-	Username string `json:"username,omitempty"`
-
-	// Password of the Prometheus server.
-	// +optional
-	Password string `json:"password,omitempty"`
-
 	// Information about the clusters which this Prometheus server should obtain metrics for.
-	// If not specified, or empty, it is assumed that all metrics obtained are for the cluster where
+	// If not specified, defaults to all metrics obtained are for the cluster where
 	// the Prometurbo probe is running.
 	// +optional
 	Clusters []ClusterConfiguration `json:"clusters,omitempty"`
