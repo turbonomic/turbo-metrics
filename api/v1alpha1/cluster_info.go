@@ -57,6 +57,7 @@ type ClusterIdentifier struct {
 	// The resulting output should be the first segment of the Kubernetes service ID, which is typically 8
 	// characters long and represented in hexadecimal format.
 	// For example, if the service ID is "5f2bd289-20b8-4c3c-be48-f5c5d8ff9c82", the extracted ID would be "5f2bd289".
+	// +kubebuilder:validation:Pattern:="^[0-9a-fA-F]{8}$"
 	ID string `json:"id"`
 }
 
