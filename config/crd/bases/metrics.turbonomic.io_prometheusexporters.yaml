@@ -40,32 +40,42 @@ spec:
                 description: EntityConfigs specifies how entities can be constructed
                   from metrics exposed by this type of prometheus exporter
                 items:
+                  description: The EntityConfiguration struct defines the configuration
+                    for an entity, which is constructed by Prometurbo.
                   properties:
                     attributes:
-                      description: AttributeConfigs specifies how to map labels into
-                        attributes of an entity
+                      description: AttributeConfigs is a list of AttributeConfiguration
+                        objects that specify how to map labels into attributes of
+                        the entity. This field is required and must contain at least
+                        one attribute configuration.
                       items:
+                        description: The AttributeConfiguration struct specifies how
+                          to map labels from Prometheus metrics into attributes of
+                          an entity.
                         properties:
                           as:
-                            description: As specifies how to reconstruct the extracted
-                              patterns from the result of the Matches and use that
-                              as the attribute value instead This field is only evaluated
-                              when Matches field is specified
+                            description: As is an optional field that specifies how
+                              to reconstruct the extracted patterns from the result
+                              of the Matches field and use that as the attribute value
+                              instead. This field is only evaluated when the Matches
+                              field is specified.
                             type: string
                           isIdentifier:
-                            description: IsIdentifier specifies if this attribute
-                              should be used as the identifier of an entity There
-                              should be one and only one identifier for an entity
+                            description: IsIdentifier is an optional field that specifies
+                              if this attribute should be used as the identifier of
+                              an entity. There should be one and only one identifier
+                              for an entity.
                             type: boolean
                           label:
-                            description: The name of the label If the Matches field
-                              is not specified, the value of this label will be used
-                              as the attribute value
+                            description: Label is the name of the label that contains
+                              the value for this attribute. If the Matches field is
+                              not specified, the value of this label will be used
+                              as the attribute value.
                             type: string
                           matches:
-                            description: Matches specifies the regular expression
-                              to extract the pattern from the label value and then
-                              use it as the attribute value
+                            description: Matches is an optional regular expression
+                              that can be used to extract a pattern from the label
+                              value and use that as the attribute value.
                             type: string
                           name:
                             description: The name of the attribute
@@ -84,16 +94,30 @@ spec:
                         VM If not set, the entity is assumed to be hosted on a container
                       type: boolean
                     metrics:
+                      description: MetricConfigs is a list of MetricConfiguration
+                        objects that specify how to collect metrics for the entity.
+                        This field is required and must contain at least one metric
+                        configuration.
                       items:
+                        description: The MetricConfiguration is a struct that represents
+                          the configuration for a specific type of metric.
                         properties:
                           queries:
+                            description: QueryConfigs is a list of QueryConfiguration
+                              structs.
                             items:
+                              description: The QueryConfiguration struct represents
+                                a specific query that will be used to collect data
+                                for the metric.
                               properties:
                                 promql:
-                                  description: PromQL specifies the Prometheus query
+                                  description: PromQL is a string that contains the
+                                    PromQL query that will be used to collect data
+                                    for the metric.
                                   type: string
                                 type:
-                                  description: Type specifies the subtype of metric
+                                  description: Type specifies the subtype of metric,
+                                    for example, "used", "capacity", or "peak".
                                   enum:
                                   - used
                                   - capacity
@@ -124,9 +148,12 @@ spec:
                         - queries
                         - type
                         type: object
+                      minItems: 1
                       type: array
                     type:
-                      description: Type specifies the type of entity
+                      description: Type specifies the type of entity. This field is
+                        required and must be one of application, databaseServer, or
+                        virtualMachine.
                       enum:
                       - application
                       - databaseServer

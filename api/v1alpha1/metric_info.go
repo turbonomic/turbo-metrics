@@ -16,22 +16,25 @@ limitations under the License.
 
 package v1alpha1
 
+// The MetricConfiguration is a struct that represents the configuration for a specific type of metric.
 type MetricConfiguration struct {
 	// Type specifies the type of metric
 	// +kubebuilder:validation:Enum=responseTime;transaction;heap;collectionTime;cacheHitRate;dbMem;cpu;memory
 	Type string `json:"type"`
 
+	// QueryConfigs is a list of QueryConfiguration structs.
 	// +listType=map
 	// +listMapKey=type
 	// +kubebuilder:validation:MinItems=1
 	QueryConfigs []QueryConfiguration `json:"queries"`
 }
 
+// The QueryConfiguration struct represents a specific query that will be used to collect data for the metric.
 type QueryConfiguration struct {
-	// Type specifies the subtype of metric
+	// Type specifies the subtype of metric, for example, "used", "capacity", or "peak".
 	// +kubebuilder:validation:Enum=used;capacity;peak
 	Type string `json:"type"`
 
-	// PromQL specifies the Prometheus query
+	// PromQL is a string that contains the PromQL query that will be used to collect data for the metric.
 	PromQL string `json:"promql"`
 }

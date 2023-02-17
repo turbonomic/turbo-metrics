@@ -5,15 +5,17 @@ metadata:
 spec:
   address: https://observatorium-api-open-cluster-management-observability.apps.cluster-nbx49.com:9090
   clusters:
-    - clusterLabels:
-        cluster: clusterA
-      id: "5f2bd289"
+    - identifier:
+        id: "5f2bd289"
+        clusterLabels:
+          cluster: clusterA
       exporterSelector:
         matchExpressions:
           - key: exporter
             operator: NotIn
             values:
               - istio
-    - clusterLabels:
-        cluster: clusterB
-      id: "936056e5"
+    - identifier:
+        id: "936056e5"
+        clusterLabels:
+          cluster: clusterB

@@ -39,22 +39,25 @@ spec:
                 description: Address of the Prometheus server.
                 type: string
               clusters:
-                description: Information about the clusters which this Prometheus
-                  server should obtain metrics for. If not specified, defaults to
-                  all metrics obtained are for the cluster where the Prometurbo probe
-                  is running.
+                description: Clusters is an optional list of ClusterConfiguration
+                  structs that specify information about the clusters that the Prometheus
+                  server should obtain metrics for. If this field is not specified,
+                  the Prometheus server obtains metrics only for the cluster where
+                  the Prometurbo probe is running.
                 items:
+                  description: The ClusterConfiguration struct is used to configure
+                    the behavior of a Prometurbo probe when collecting metrics from
+                    a cluster.
                   properties:
-                    clusterLabels:
-                      additionalProperties:
-                        type: string
-                      description: The labels that identify the cluster when executing
-                        PromQL query against the Prometheus server
-                      type: object
                     exporterSelector:
-                      description: The Label selector for PrometheusExporters If not
-                        defined, defaults to all PrometheusExporter resources in the
-                        current namespace
+                      description: The ExporterSelector field is an optional field
+                        that specifies a label selector for PrometheusExporter resources.
+                        This field is of type *metav1.LabelSelector, which is a Kubernetes
+                        API type that represents a label selector. If the ExporterSelector
+                        field is not defined, it will default to all PrometheusExporter
+                        resources in the current namespace. If it is defined, it should
+                        be set to a valid label selector that can be used to identify
+                        the desired resources.
                       properties:
                         matchExpressions:
                           description: matchExpressions is a list of label selector
@@ -97,13 +100,39 @@ spec:
                             only "value". The requirements are ANDed.
                           type: object
                       type: object
-                    id:
-                      description: 'The unique ID of the cluster Get the ID by running
-                        the following command in the cluster: kubectl -n default get
-                        svc kubernetes -ojsonpath=''{.metadata.uid}'' If not specified,
-                        defaults to the ID of the cluster where the Prometurbo probe
-                        is running'
-                      type: string
+                    identifier:
+                      description: The Identifier field is an optional field that
+                        specifies the cluster identifier for a Prometurbo probe. If
+                        this field is not specified, the probe will default to the
+                        cluster where it is running.
+                      properties:
+                        clusterLabels:
+                          additionalProperties:
+                            type: string
+                          description: 'The ClusterLabels that store the labels that
+                            identify the cluster when executing PromQL queries against
+                            the Prometheus server. Use this field to specify different
+                            labels for each cluster. These labels will be used in
+                            PromQL queries to filter metrics from a specific cluster.
+                            For example, the following labels could be used to select
+                            metrics from the "production" cluster in the "us-west-2"
+                            region. clusterLabels := map[string]string { "cluster":
+                            "production", "region":  "us-west-2", }'
+                          type: object
+                        id:
+                          description: 'The unique ID of the cluster. Get the ID by
+                            running the following command inside the cluster: kubectl
+                            -n default get svc kubernetes -ojsonpath=''{.metadata.uid}''
+                            | grep -Eo "^[0-9a-fA-F]{8}" The resulting output should
+                            be the first segment of the Kubernetes service ID, which
+                            is typically 8 characters long and represented in hexadecimal
+                            format. For example, if the service ID is "5f2bd289-20b8-4c3c-be48-f5c5d8ff9c82",
+                            the extracted ID would be "5f2bd289".'
+                          type: string
+                      required:
+                      - clusterLabels
+                      - id
+                      type: object
                   type: object
                 type: array
             required:
@@ -114,14 +143,25 @@ spec:
             properties:
               clusters:
                 items:
+                  description: The ClusterStatus struct defines the status of a cluster.
                   properties:
                     entities:
+                      description: Entities is a list of EntityStatus objects. This
+                        field is omitted if there are no entities found in the cluster.
                       items:
+                        description: The EntityStatus type is a struct that represents
+                          the status of an entity in a cluster.
                         properties:
                           count:
+                            description: Count is a pointer to an int32 that represents
+                              the number of entities of this type in the cluster.
+                              If this field is nil, it means that the number of entities
+                              is unknown or has not been discovered yet.
                             format: int32
                             type: integer
                           type:
+                            description: Type is a string that specifies the type
+                              of entity.
                             type: string
                         required:
                         - count
@@ -129,8 +169,13 @@ spec:
                         type: object
                       type: array
                     id:
+                      description: ID is the unique ID that identifies the cluster.
                       type: string
                     lastDiscoveryTime:
+                      description: LastDiscoveryTime is a metav1.Time object that
+                        indicates when the cluster was last discovered. This field
+                        is optional and can be omitted if the discovery time is not
+                        known.
                       format: date-time
                       type: string
                   required:

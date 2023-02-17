@@ -27,9 +27,10 @@ type PrometheusServerSpec struct {
 	// Address of the Prometheus server.
 	Address string `json:"address"`
 
-	// Information about the clusters which this Prometheus server should obtain metrics for.
-	// If not specified, defaults to all metrics obtained are for the cluster where
-	// the Prometurbo probe is running.
+	// Clusters is an optional list of ClusterConfiguration structs that specify information about the clusters
+	// that the Prometheus server should obtain metrics for.
+	// If this field is not specified, the Prometheus server obtains metrics only for the cluster where the
+	// Prometurbo probe is running.
 	// +optional
 	Clusters []ClusterConfiguration `json:"clusters,omitempty"`
 }
