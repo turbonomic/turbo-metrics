@@ -1,0 +1,25 @@
+domain: turbonomic.io
+layout:
+- go.kubebuilder.io/v3
+projectName: turbo-metrics
+repo: github.com/turbonomic/turbo-metrics
+resources:
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: turbonomic.io
+  group: metrics
+  kind: PrometheusServer
+  path: github.com/turbonomic/turbo-metrics/api/v1alpha1
+  version: v1alpha1
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: turbonomic.io
+  group: metrics
+  kind: PrometheusExporter
+  path: github.com/turbonomic/turbo-metrics/api/v1alpha1
+  version: v1alpha1
+version: "3"
