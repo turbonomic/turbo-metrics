@@ -85,11 +85,11 @@ func main() {
 		setupLog.Error(err, "unable to create controller", "controller", "PrometheusServer")
 		os.Exit(1)
 	}
-	if err = (&controllers.PrometheusExporterReconciler{
+	if err = (&controllers.PrometheusQueryMappingReconciler{
 		Client: mgr.GetClient(),
 		Scheme: mgr.GetScheme(),
 	}).SetupWithManager(mgr); err != nil {
-		setupLog.Error(err, "unable to create controller", "controller", "PrometheusExporter")
+		setupLog.Error(err, "unable to create controller", "controller", "PrometheusQueryMapping")
 		os.Exit(1)
 	}
 	//+kubebuilder:scaffold:builder

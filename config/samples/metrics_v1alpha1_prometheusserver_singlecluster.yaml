@@ -5,9 +5,9 @@ metadata:
 spec:
   address: http://prometheus.istio-system:9090
   clusters:
-    - exporterSelector:
+    - queryMappingSelector:
         matchExpressions:
-          - key: exporter
+          - key: mapping
             operator: NotIn
             values:
               - jmx-tomcat

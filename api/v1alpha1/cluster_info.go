@@ -26,14 +26,14 @@ type ClusterConfiguration struct {
 	// +optional
 	Identifier ClusterIdentifier `json:"identifier,omitempty"`
 
-	// The ExporterSelector field is an optional field that specifies a label selector for PrometheusExporter
+	// The QueryMappingSelector field is an optional field that specifies a label selector for PrometheusQueryMapping
 	// resources. This field is of type *metav1.LabelSelector, which is a Kubernetes API type that represents
 	// a label selector.
-	// If the ExporterSelector field is not defined, it will default to all PrometheusExporter resources in the
+	// If the QueryMappingSelector field is not defined, it will default to all PrometheusQueryMapping resources in the
 	// current namespace. If it is defined, it should be set to a valid label selector that can be used to identify
 	// the desired resources.
 	// +optional
-	ExporterSelector *metav1.LabelSelector `json:"exporterSelector,omitempty"`
+	QueryMappingSelector *metav1.LabelSelector `json:"queryMappingSelector,omitempty"`
 }
 
 // The ClusterIdentifier struct is used to identify a Kubernetes cluster and provide labels

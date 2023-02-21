@@ -9,9 +9,9 @@ spec:
         id: "5f2bd289"
         clusterLabels:
           cluster: clusterA
-      exporterSelector:
+      queryMappingSelector:
         matchExpressions:
-          - key: exporter
+          - key: mapping
             operator: NotIn
             values:
               - istio
