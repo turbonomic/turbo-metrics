@@ -1,5 +1,5 @@
 apiVersion: metrics.turbonomic.io/v1alpha1
-kind: PrometheusExporter
+kind: PrometheusQueryMapping
 metadata:
   name: webdriver
 spec:

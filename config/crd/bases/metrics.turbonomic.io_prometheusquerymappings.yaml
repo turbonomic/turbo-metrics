@@ -5,20 +5,22 @@ metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.8.0
   creationTimestamp: null
-  name: prometheusexporters.metrics.turbonomic.io
+  name: prometheusquerymappings.metrics.turbonomic.io
 spec:
   group: metrics.turbonomic.io
   names:
-    kind: PrometheusExporter
-    listKind: PrometheusExporterList
-    plural: prometheusexporters
-    singular: prometheusexporter
+    kind: PrometheusQueryMapping
+    listKind: PrometheusQueryMappingList
+    plural: prometheusquerymappings
+    shortNames:
+    - pqm
+    singular: prometheusquerymapping
   scope: Namespaced
   versions:
   - name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: PrometheusExporter is the Schema for the prometheusexporters
+        description: PrometheusQueryMapping is the Schema for the prometheusquerymappings
           API
         properties:
           apiVersion:
@@ -34,14 +36,15 @@ spec:
           metadata:
             type: object
           spec:
-            description: PrometheusExporterSpec defines the desired state of PrometheusExporter
+            description: PrometheusQueryMappingSpec defines the desired state of PrometheusQueryMapping
             properties:
               entities:
-                description: EntityConfigs specifies how entities can be constructed
-                  from metrics exposed by this type of prometheus exporter
+                description: EntityConfigs specifies how Turbonomic entities can be
+                  mapped from Prometheus query result
                 items:
-                  description: The EntityConfiguration struct defines the configuration
-                    for an entity, which is constructed by Prometurbo.
+                  description: The EntityConfiguration defines the configuration for
+                    mapping from Prometheus query result to a specific type of Turbonomic
+                    entity.
                   properties:
                     attributes:
                       description: AttributeConfigs is a list of AttributeConfiguration
@@ -49,9 +52,8 @@ spec:
                         the entity. This field is required and must contain at least
                         one attribute configuration.
                       items:
-                        description: The AttributeConfiguration struct specifies how
-                          to map labels from Prometheus metrics into attributes of
-                          an entity.
+                        description: The AttributeConfiguration specifies how to map
+                          labels from Prometheus metrics into attributes of an entity.
                         properties:
                           as:
                             description: As is an optional field that specifies how
@@ -170,7 +172,8 @@ spec:
             - entities
             type: object
           status:
-            description: PrometheusExporterStatus defines the observed state of PrometheusExporter
+            description: PrometheusQueryMappingStatus defines the observed state of
+              PrometheusQueryMapping
             properties:
               message:
                 type: string

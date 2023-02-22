@@ -1,24 +1,20 @@
-# permissions for end users to edit prometheusexporters.
+# permissions for end users to view prometheusquerymappings.
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: prometheusexporter-editor-role
+  name: prometheusquerymapping-viewer-role
 rules:
 - apiGroups:
   - metrics.turbonomic.io
   resources:
-  - prometheusexporters
+  - prometheusquerymappings
   verbs:
-  - create
-  - delete
   - get
   - list
-  - patch
-  - update
   - watch
 - apiGroups:
   - metrics.turbonomic.io
   resources:
-  - prometheusexporters/status
+  - prometheusquerymappings/status
   verbs:
   - get

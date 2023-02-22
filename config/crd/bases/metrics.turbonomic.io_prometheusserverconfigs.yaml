@@ -5,20 +5,23 @@ metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.8.0
   creationTimestamp: null
-  name: prometheusservers.metrics.turbonomic.io
+  name: prometheusserverconfigs.metrics.turbonomic.io
 spec:
   group: metrics.turbonomic.io
   names:
-    kind: PrometheusServer
-    listKind: PrometheusServerList
-    plural: prometheusservers
-    singular: prometheusserver
+    kind: PrometheusServerConfig
+    listKind: PrometheusServerConfigList
+    plural: prometheusserverconfigs
+    shortNames:
+    - psc
+    singular: prometheusserverconfig
   scope: Namespaced
   versions:
   - name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: PrometheusServer is the Schema for the prometheusservers API
+        description: PrometheusServerConfig is the Schema for the prometheusserverconfigs
+          API
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -33,13 +36,13 @@ spec:
           metadata:
             type: object
           spec:
-            description: PrometheusServerSpec defines the desired state of PrometheusServer
+            description: PrometheusServerConfigSpec defines the desired state of PrometheusServerConfig
             properties:
               address:
                 description: Address of the Prometheus server.
                 type: string
               clusters:
-                description: Clusters is an optional list of ClusterConfiguration
+                description: ClusterConfigs is an optional list of ClusterConfiguration
                   structs that specify information about the clusters that the Prometheus
                   server should obtain metrics for. If this field is not specified,
                   the Prometheus server obtains metrics only for the cluster where
@@ -49,15 +52,49 @@ spec:
                     the behavior of a Prometurbo probe when collecting metrics from
                     a cluster.
                   properties:
-                    exporterSelector:
-                      description: The ExporterSelector field is an optional field
-                        that specifies a label selector for PrometheusExporter resources.
-                        This field is of type *metav1.LabelSelector, which is a Kubernetes
-                        API type that represents a label selector. If the ExporterSelector
-                        field is not defined, it will default to all PrometheusExporter
-                        resources in the current namespace. If it is defined, it should
-                        be set to a valid label selector that can be used to identify
-                        the desired resources.
+                    identifier:
+                      description: The Identifier field is an optional field that
+                        specifies the cluster identifier for a Prometurbo probe. If
+                        this field is not specified, the probe will default to the
+                        cluster where it is running.
+                      properties:
+                        clusterLabels:
+                          additionalProperties:
+                            type: string
+                          description: 'The ClusterLabels that store the labels that
+                            identify the cluster when executing PromQL queries against
+                            the Prometheus server. Use this field to specify different
+                            labels for each cluster. These labels will be used in
+                            PromQL queries to filter metrics from a specific cluster.
+                            For example, the following labels could be used to select
+                            metrics from the "production" cluster in the "us-west-2"
+                            region. clusterLabels := map[string]string { "cluster":
+                            "production", "region":  "us-west-2", }'
+                          type: object
+                        id:
+                          description: 'The unique ID of the cluster. Get the ID by
+                            running the following command inside the cluster: kubectl
+                            -n default get svc kubernetes -ojsonpath=''{.metadata.uid}''
+                            | grep -Eo "^[0-9a-fA-F]{8}" The resulting output should
+                            be the first segment of the Kubernetes service ID, which
+                            is typically 8 characters long and represented in hexadecimal
+                            format. For example, if the service ID is "5f2bd289-20b8-4c3c-be48-f5c5d8ff9c82",
+                            the extracted ID would be "5f2bd289".'
+                          pattern: ^[0-9a-fA-F]{8}$
+                          type: string
+                      required:
+                      - clusterLabels
+                      - id
+                      type: object
+                    queryMappingSelector:
+                      description: The QueryMappingSelector field is an optional field
+                        that specifies a label selector for PrometheusQueryMapping
+                        resources. This field is of type *metav1.LabelSelector, which
+                        is a Kubernetes API type that represents a label selector.
+                        If the QueryMappingSelector field is not defined, it will
+                        default to all PrometheusQueryMapping resources in the current
+                        namespace. If it is defined, it should be set to a valid label
+                        selector that can be used to identify the desired resources.
                       properties:
                         matchExpressions:
                           description: matchExpressions is a list of label selector
@@ -100,47 +137,14 @@ spec:
                             only "value". The requirements are ANDed.
                           type: object
                       type: object
-                    identifier:
-                      description: The Identifier field is an optional field that
-                        specifies the cluster identifier for a Prometurbo probe. If
-                        this field is not specified, the probe will default to the
-                        cluster where it is running.
-                      properties:
-                        clusterLabels:
-                          additionalProperties:
-                            type: string
-                          description: 'The ClusterLabels that store the labels that
-                            identify the cluster when executing PromQL queries against
-                            the Prometheus server. Use this field to specify different
-                            labels for each cluster. These labels will be used in
-                            PromQL queries to filter metrics from a specific cluster.
-                            For example, the following labels could be used to select
-                            metrics from the "production" cluster in the "us-west-2"
-                            region. clusterLabels := map[string]string { "cluster":
-                            "production", "region":  "us-west-2", }'
-                          type: object
-                        id:
-                          description: 'The unique ID of the cluster. Get the ID by
-                            running the following command inside the cluster: kubectl
-                            -n default get svc kubernetes -ojsonpath=''{.metadata.uid}''
-                            | grep -Eo "^[0-9a-fA-F]{8}" The resulting output should
-                            be the first segment of the Kubernetes service ID, which
-                            is typically 8 characters long and represented in hexadecimal
-                            format. For example, if the service ID is "5f2bd289-20b8-4c3c-be48-f5c5d8ff9c82",
-                            the extracted ID would be "5f2bd289".'
-                          pattern: ^[0-9a-fA-F]{8}$
-                          type: string
-                      required:
-                      - clusterLabels
-                      - id
-                      type: object
                   type: object
                 type: array
             required:
             - address
             type: object
           status:
-            description: PrometheusServerStatus defines the observed state of PrometheusServer
+            description: PrometheusServerConfigStatus defines the observed state of
+              PrometheusServerConfig
             properties:
               clusters:
                 items:
@@ -150,8 +154,8 @@ spec:
                       description: Entities is a list of EntityStatus objects. This
                         field is omitted if there are no entities found in the cluster.
                       items:
-                        description: The EntityStatus type is a struct that represents
-                          the status of an entity in a cluster.
+                        description: The EntityStatus represents the status of an
+                          entity in a cluster.
                         properties:
                           count:
                             description: Count is a pointer to an int32 that represents

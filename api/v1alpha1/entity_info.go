@@ -16,7 +16,8 @@ limitations under the License.
 
 package v1alpha1
 
-// The EntityConfiguration struct defines the configuration for an entity, which is constructed by Prometurbo.
+// The EntityConfiguration defines the configuration for mapping from Prometheus query result
+// to a specific type of Turbonomic entity.
 type EntityConfiguration struct {
 	// Type specifies the type of entity.
 	// This field is required and must be one of application, databaseServer, or virtualMachine.
@@ -40,7 +41,7 @@ type EntityConfiguration struct {
 	AttributeConfigs []AttributeConfiguration `json:"attributes"`
 }
 
-// The AttributeConfiguration struct specifies how to map labels from Prometheus metrics into attributes of an entity.
+// The AttributeConfiguration specifies how to map labels from Prometheus metrics into attributes of an entity.
 type AttributeConfiguration struct {
 	// The name of the attribute
 	Name string `json:"name"`
@@ -66,7 +67,7 @@ type AttributeConfiguration struct {
 	IsIdentifier bool `json:"isIdentifier,omitempty"`
 }
 
-// The EntityStatus type is a struct that represents the status of an entity in a cluster.
+// The EntityStatus represents the status of an entity in a cluster.
 type EntityStatus struct {
 	// Type is a string that specifies the type of entity.
 	Type string `json:"type"`
