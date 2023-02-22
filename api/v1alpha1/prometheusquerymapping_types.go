@@ -55,6 +55,7 @@ type PrometheusQueryMappingStatus struct {
 
 //+kubebuilder:object:root=true
 //+kubebuilder:subresource:status
+//+kubebuilder:resource:shortName=pqm
 
 // PrometheusQueryMapping is the Schema for the prometheusquerymappings API
 type PrometheusQueryMapping struct {

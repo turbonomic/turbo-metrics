@@ -66,6 +66,7 @@ type PrometheusServerConfigStatus struct {
 
 //+kubebuilder:object:root=true
 //+kubebuilder:subresource:status
+//+kubebuilder:resource:shortName=psc
 
 // PrometheusServerConfig is the Schema for the prometheusserverconfigs API
 type PrometheusServerConfig struct {

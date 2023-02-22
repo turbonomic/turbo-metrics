@@ -12,6 +12,8 @@ spec:
     kind: PrometheusServerConfig
     listKind: PrometheusServerConfigList
     plural: prometheusserverconfigs
+    shortNames:
+    - psc
     singular: prometheusserverconfig
   scope: Namespaced
   versions:
