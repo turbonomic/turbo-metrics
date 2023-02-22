@@ -5,20 +5,21 @@ metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.8.0
   creationTimestamp: null
-  name: prometheusservers.metrics.turbonomic.io
+  name: prometheusserverconfigs.metrics.turbonomic.io
 spec:
   group: metrics.turbonomic.io
   names:
-    kind: PrometheusServer
-    listKind: PrometheusServerList
-    plural: prometheusservers
-    singular: prometheusserver
+    kind: PrometheusServerConfig
+    listKind: PrometheusServerConfigList
+    plural: prometheusserverconfigs
+    singular: prometheusserverconfig
   scope: Namespaced
   versions:
   - name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: PrometheusServer is the Schema for the prometheusservers API
+        description: PrometheusServerConfig is the Schema for the prometheusserverconfigs
+          API
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -33,13 +34,13 @@ spec:
           metadata:
             type: object
           spec:
-            description: PrometheusServerSpec defines the desired state of PrometheusServer
+            description: PrometheusServerConfigSpec defines the desired state of PrometheusServerConfig
             properties:
               address:
                 description: Address of the Prometheus server.
                 type: string
               clusters:
-                description: Clusters is an optional list of ClusterConfiguration
+                description: ClusterConfigs is an optional list of ClusterConfiguration
                   structs that specify information about the clusters that the Prometheus
                   server should obtain metrics for. If this field is not specified,
                   the Prometheus server obtains metrics only for the cluster where
@@ -140,7 +141,8 @@ spec:
             - address
             type: object
           status:
-            description: PrometheusServerStatus defines the observed state of PrometheusServer
+            description: PrometheusServerConfigStatus defines the observed state of
+              PrometheusServerConfig
             properties:
               clusters:
                 items:

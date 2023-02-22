@@ -14,7 +14,7 @@ resources:
   controller: true
   domain: turbonomic.io
   group: metrics
-  kind: PrometheusServer
+  kind: PrometheusServerConfig
   path: github.com/turbonomic/turbo-metrics/api/v1alpha1
   version: v1alpha1
 - api:

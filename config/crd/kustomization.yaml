@@ -2,20 +2,20 @@
 # since it depends on service name and namespace that are out of this kustomize package.
 # It should be run by config/default
 resources:
-- bases/metrics.turbonomic.io_prometheusservers.yaml
+- bases/metrics.turbonomic.io_prometheusserverconfigs.yaml
 - bases/metrics.turbonomic.io_prometheusquerymappings.yaml
 #+kubebuilder:scaffold:crdkustomizeresource
 
 patchesStrategicMerge:
 # [WEBHOOK] To enable webhook, uncomment all the sections with [WEBHOOK] prefix.
 # patches here are for enabling the conversion webhook for each CRD
-#- patches/webhook_in_prometheusservers.yaml
+#- patches/webhook_in_prometheusserverconfigs.yaml
 #- patches/webhook_in_prometheusquerymappings.yaml
 #+kubebuilder:scaffold:crdkustomizewebhookpatch
 
 # [CERTMANAGER] To enable cert-manager, uncomment all the sections with [CERTMANAGER] prefix.
 # patches here are for enabling the CA injection for each CRD
-#- patches/cainjection_in_prometheusservers.yaml
+#- patches/cainjection_in_prometheusserverconfigs.yaml
 #- patches/cainjection_in_prometheusquerymappings.yaml
 #+kubebuilder:scaffold:crdkustomizecainjectionpatch
 

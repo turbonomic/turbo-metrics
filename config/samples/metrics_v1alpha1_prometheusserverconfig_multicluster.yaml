@@ -1,7 +1,7 @@
 apiVersion: metrics.turbonomic.io/v1alpha1
-kind: PrometheusServer
+kind: PrometheusServerConfig
 metadata:
-  name: prometheusserver-multicluster
+  name: prometheusserverconfig-multicluster
 spec:
   address: https://observatorium-api-open-cluster-management-observability.apps.cluster-nbx49.com:9090
   clusters:

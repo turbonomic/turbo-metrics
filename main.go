@@ -78,11 +78,11 @@ func main() {
 		os.Exit(1)
 	}
 
-	if err = (&controllers.PrometheusServerReconciler{
+	if err = (&controllers.PrometheusServerConfigReconciler{
 		Client: mgr.GetClient(),
 		Scheme: mgr.GetScheme(),
 	}).SetupWithManager(mgr); err != nil {
-		setupLog.Error(err, "unable to create controller", "controller", "PrometheusServer")
+		setupLog.Error(err, "unable to create controller", "controller", "PrometheusServerConfig")
 		os.Exit(1)
 	}
 	if err = (&controllers.PrometheusQueryMappingReconciler{
