@@ -2,6 +2,8 @@ apiVersion: metrics.turbonomic.io/v1alpha1
 kind: PrometheusQueryMapping
 metadata:
   name: webdriver
+  labels:
+    mapping: webdriver
 spec:
   entities:
     - type: application
