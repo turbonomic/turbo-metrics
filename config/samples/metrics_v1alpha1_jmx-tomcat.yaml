@@ -2,6 +2,8 @@ apiVersion: metrics.turbonomic.io/v1alpha1
 kind: PrometheusQueryMapping
 metadata:
   name: jmx-tomcat
+  labels:
+    mapping: jmx-tomcat
 spec:
   entities:
     - type: application

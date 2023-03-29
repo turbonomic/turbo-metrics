@@ -2,6 +2,8 @@ apiVersion: metrics.turbonomic.io/v1alpha1
 kind: PrometheusQueryMapping
 metadata:
   name: istio
+  labels:
+    mapping: istio
 spec:
   entities:
     - type: application
