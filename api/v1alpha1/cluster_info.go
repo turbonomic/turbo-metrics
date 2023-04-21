@@ -53,11 +53,10 @@ type ClusterIdentifier struct {
 
 	// The unique ID of the cluster.
 	// Get the ID by running the following command inside the cluster:
-	//     kubectl -n default get svc kubernetes -ojsonpath='{.metadata.uid}' | grep -Eo "^[0-9a-fA-F]{8}"
-	// The resulting output should be the first segment of the Kubernetes service ID, which is typically 8
-	// characters long and represented in hexadecimal format.
-	// For example, if the service ID is "5f2bd289-20b8-4c3c-be48-f5c5d8ff9c82", the extracted ID would be "5f2bd289".
-	// +kubebuilder:validation:Pattern:="^[0-9a-fA-F]{8}$"
+	//     kubectl -n default get svc kubernetes -ojsonpath='{.metadata.uid}'
+	// The resulting output should be the Kubernetes service ID, which is a version 4 UUID.
+	// For example, 5f2bd289-20b8-4c3c-be48-f5c5d8ff9c82.
+	// +kubebuilder:validation:Pattern:="^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
 	ID string `json:"id"`
 }
 
