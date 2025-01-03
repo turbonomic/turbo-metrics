@@ -1,0 +1,59 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  creationTimestamp: null
+  name: manager-role
+rules:
+- apiGroups:
+  - metrics.turbonomic.io
+  resources:
+  - prometheusquerymappings
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - metrics.turbonomic.io
+  resources:
+  - prometheusquerymappings/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - metrics.turbonomic.io
+  resources:
+  - prometheusquerymappings/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - metrics.turbonomic.io
+  resources:
+  - prometheusserverconfigs
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - metrics.turbonomic.io
+  resources:
+  - prometheusserverconfigs/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - metrics.turbonomic.io
+  resources:
+  - prometheusserverconfigs/status
+  verbs:
+  - get
+  - patch
+  - update
