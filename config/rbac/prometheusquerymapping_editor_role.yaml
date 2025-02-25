@@ -1,0 +1,24 @@
+# permissions for end users to edit prometheusquerymappings.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: prometheusquerymapping-editor-role
+rules:
+- apiGroups:
+  - metrics.turbonomic.io
+  resources:
+  - prometheusquerymappings
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - metrics.turbonomic.io
+  resources:
+  - prometheusquerymappings/status
+  verbs:
+  - get
